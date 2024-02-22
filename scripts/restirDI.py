@@ -1,22 +1,22 @@
 from falcor import *
 
-def render_graph_MinimalPathTracer():
-    g = RenderGraph("MinimalPathTracer")
+def render_graph_restirDI():
+    g = RenderGraph("restirDI")
     AccumulatePass = createPass("AccumulatePass", {'enabled': False, 'precisionMode': 'Single'})
     g.addPass(AccumulatePass, "AccumulatePass")
     ToneMapper = createPass("ToneMapper", {'autoExposure': False, 'exposureCompensation': 0.0})
     g.addPass(ToneMapper, "ToneMapper")
-    MinimalPathTracer = createPass("MinimalPathTracer", {'maxBounces': 0})
-    g.addPass(MinimalPathTracer, "MinimalPathTracer")
+    restirDI = createPass("restirDI", {'maxBounces': 0})
+    g.addPass(restirDI, "restirDI")
     VBufferRT = createPass("VBufferRT", {'samplePattern': 'Stratified', 'sampleCount': 16})
     g.addPass(VBufferRT, "VBufferRT")
     g.addEdge("AccumulatePass.output", "ToneMapper.src")
-    g.addEdge("VBufferRT.vbuffer", "MinimalPathTracer.vbuffer")
-    g.addEdge("VBufferRT.viewW", "MinimalPathTracer.viewW")
-    g.addEdge("MinimalPathTracer.color", "AccumulatePass.input")
+    g.addEdge("VBufferRT.vbuffer", "restirDI.vbuffer")
+    g.addEdge("VBufferRT.viewW", "restirDI.viewW")
+    g.addEdge("restirDI.color", "AccumulatePass.input")
     g.markOutput("ToneMapper.dst")
     return g
 
-MinimalPathTracer = render_graph_MinimalPathTracer()
-try: m.addGraph(MinimalPathTracer)
+restirDI = render_graph_restirDI()
+try: m.addGraph(restirDI)
 except NameError: None
