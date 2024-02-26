@@ -301,7 +301,6 @@ float3 evalDirectAnalytic(const ShadingData sd, const IMaterialInstance mi, inou
         return float3(0.f);
 
     uint risSamples = min(lightCount, M);
-    float contributionWeight = lightCount;
     Reservoir reservoir;
 
     for (int i = 0; i < risSamples; i++)
@@ -333,6 +332,9 @@ float3 evalDirectAnalytic(const ShadingData sd, const IMaterialInstance mi, inou
 
         // Compute pHat
         float pHat = length(radiance);
+
+        // Contribution weight
+        float contributionWeight = lightCount;
 
         // Compute the weight of the sample
         float weight = pHat * misWeight * contributionWeight;
